@@ -1,0 +1,45 @@
+#login{position:fixed;inset:0;display:grid;place-items:center;overflow:auto;padding:16px;
+  background:radial-gradient(circle at 30% 20%,var(--papel),var(--fondo) 60%);transition:opacity .8s ease}
+#login.fuera{opacity:0;pointer-events:none}
+.carta{position:relative;width:min(960px,100%);display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  padding:48px;background:var(--fondo);border-radius:26px;box-shadow:var(--sombra)}
+.hilo{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;fill:none;stroke:var(--hilo)}
+.hilo-linea{stroke-width:2.5;stroke-linecap:round;vector-effect:non-scaling-stroke;
+  stroke-dasharray:1;stroke-dashoffset:1;animation:dibujar 3s ease forwards}
+.hilo-puntada{stroke-width:1.5;stroke-dasharray:7 7;vector-effect:non-scaling-stroke;opacity:0;animation:aparecer 1.2s 2.4s ease forwards}
+@keyframes dibujar{to{stroke-dashoffset:0}}
+@keyframes aparecer{to{opacity:.7}}
+.corazon{position:absolute;color:var(--hilo);font-size:22px;background:var(--fondo);line-height:1;padding:0 4px}
+.c1{top:-11px;left:30px}.c2{top:-11px;right:30px}.c3{bottom:-11px;left:30px}.c4{bottom:-11px;right:30px}
+
+.album{display:flex;flex-direction:column;align-items:center;gap:12px;z-index:1}
+.foto-marco{width:100%;aspect-ratio:4/5;max-height:60vh;background:#fff;padding:12px 12px 36px;border-radius:4px;
+  box-shadow:0 6px 24px rgba(74,44,42,.18);transform:rotate(-1.5deg);position:relative}
+.foto-marco img{width:100%;height:100%;object-fit:cover;display:block;border-radius:2px;opacity:1;transition:opacity .3s ease}
+.foto-marco img.foto-fade{opacity:0}
+#foto-vacia{position:absolute;inset:12px 12px 36px;display:grid;place-items:center;background:var(--papel);
+  color:var(--rosa);font-size:64px;font-family:var(--serif)}
+.pie{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--malva);min-height:26px;text-align:center}
+.album-nav{display:flex;gap:12px}
+.album-nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--rosa);background:transparent;
+  color:var(--malva);font-size:22px;cursor:pointer;transition:.2s}
+.album-nav button:hover{background:var(--rosa);color:#fff}
+
+.panel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;z-index:1}
+.panel h1{font-family:var(--serif);font-weight:600;font-size:clamp(24px,3.4vw,34px);text-align:center;color:var(--malva)}
+.dots{display:flex;gap:18px}
+.dot::before{content:'♡';font-size:34px;color:var(--rosa);transition:.2s}
+.dot.on::before{content:'♥';color:var(--hilo)}
+.teclado{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
+.teclado button{height:56px;border:none;border-radius:14px;background:var(--papel);color:var(--texto);
+  font:500 20px var(--sans);cursor:pointer;transition:.15s;box-shadow:0 2px 0 var(--rosa)}
+.teclado button:hover{background:var(--rosa);color:#fff}
+.teclado button:active{transform:translateY(2px);box-shadow:none}
+.teclado .accion{font-size:13px;letter-spacing:.04em;background:var(--malva);color:#fff;box-shadow:0 2px 0 #8a4455}
+.shake{animation:shake .45s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+
+@media(max-width:720px){
+  .carta{grid-template-columns:1fr;padding:32px 22px;gap:24px}
+  .foto-marco{aspect-ratio:1/1;max-height:38vh}
+}
