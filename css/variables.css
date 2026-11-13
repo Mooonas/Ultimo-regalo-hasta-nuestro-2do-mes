@@ -1,0 +1,9 @@
+:root{
+  --fondo:#FFF5F7; --papel:#FDE2E4; --rosa:#E5989B; --malva:#B56576;
+  --hilo:#C1121F; --texto:#4A2C2A;
+  --serif:'Cormorant Garamond',Georgia,serif; --sans:'Montserrat',system-ui,sans-serif;
+  --sombra:0 10px 40px rgba(181,101,118,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#050711;color:var(--texto);font-family:var(--sans)}
+[hidden]{display:none!important}
