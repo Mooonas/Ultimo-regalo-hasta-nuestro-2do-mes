@@ -55,14 +55,20 @@ const FOTOS = ARCHIVOS_FOTO.map((archivo, i) => ({
 export function initLogin(onSuccess) {
   const dots = [...document.querySelectorAll('.dot')];
   const panel = document.querySelector('.panel');
-  let code = '', activo = true;
+  let code = '', activo = true, intervaloFotos = null, timerCambio = null;
 
   const render = () => dots.forEach((d, i) => d.classList.toggle('on', i < code.length));
   const add = (n) => { if (activo && code.length < 4) { code += n; render(); } };
   const del = () => { code = code.slice(0, -1); render(); };
   const enter = () => {
     if (!activo) return;
-    if (code === CLAVE) { activo = false; onSuccess(); return; }
+    if (code === CLAVE) {
+      activo = false;
+      clearInterval(intervaloFotos);
+      if (timerCambio !== null) clearTimeout(timerCambio);
+      onSuccess();
+      return;
+    }
     panel.classList.remove('shake'); void panel.offsetWidth; panel.classList.add('shake');
     code = ''; setTimeout(render, 350);
   };
@@ -87,8 +93,19 @@ export function initLogin(onSuccess) {
   const mostrar = () => {
     vacia.hidden = true; img.hidden = false; img.src = fotosAleatorias[i].src; pie.textContent = fotosAleatorias[i].pie;
   };
+  const cambiarFoto = (direccion) => {
+    if (timerCambio !== null) clearTimeout(timerCambio);
+    img.classList.add('foto-fade');
+    timerCambio = setTimeout(() => {
+      i = (i + direccion + fotosAleatorias.length) % fotosAleatorias.length;
+      mostrar();
+      img.classList.remove('foto-fade');
+      timerCambio = null;
+    }, 300);
+  };
   img.addEventListener('error', () => { img.hidden = true; vacia.hidden = false; });
-  document.getElementById('prev').onclick = () => { i = (i - 1 + FOTOS.length) % FOTOS.length; mostrar(); };
-  document.getElementById('next').onclick = () => { i = (i + 1) % FOTOS.length; mostrar(); };
+  document.getElementById('prev').onclick = () => cambiarFoto(-1);
+  document.getElementById('next').onclick = () => cambiarFoto(1);
   mostrar();
+  intervaloFotos = setInterval(() => cambiarFoto(1), 3000);
 }
